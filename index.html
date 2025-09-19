@@ -12,6 +12,9 @@
     .pill{ border-radius:9999px; }
     @media print{ .no-print{ display:none !important; } }
     table tr:nth-child(even){ background:#FAFAFA; }
+    /* 드롭다운 강조: Manuals=푸른 배경, Emergency=노랑 배경 */
+    select#symptomSelect option[data-manual="1"]{ background:#E0F2FE; color:#0369A1; font-weight:600; }
+    select#symptomSelect option[data-emergency="1"]{ background:#FEF3C7; color:#92400E; font-weight:600; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -58,7 +61,7 @@
     <section id="output" class="mt-6"></section>
   </div>
 
-  <script type="application/json" id="embedded-kb">{"name": "GSMBIZ EV Charger Troubleshooting", "version": "1.1", "updated_at": "2025-09-03T13:14:00", "locale": "ko-KR", "units": {"voltage": "V", "current": "A", "resistance": "Ω"}, "global_safety": ["분전함/충전기 작업 전: 차단기 OFF, 작업 안내표지판 설치.", "절연장갑/보안경/절연신발 착용, 비/습기 환경 시 감전 위험에 유의.", "테스트 후 접지선/중성선/상 간 혼동 금지. 재결선 전/후 항상 전압 확인.", "고장 원인 파악 전 임의 부하 투입 금지. 사진/영상으로 현장 상태 기록.", "1일 1회 이상 현장직원 대상 안전교육 실시"], "signal_reference": {"CP값 측정 기준": "DC 12V, 제조사별 허용 오차 ±1V", "CS값 측정 기준": "차량 결합/버튼 상태에 따라 저항/전압 변화 감지 확인", "절연저항 기준": "21.01.01 이전: 0.2MΩ / 이후: 1MΩ", "접지저항 기준": "법적 허용 100Ω 초과 시에도 반복 측정으로 신뢰도 확보"}, "symptoms": [{"id": 1, "name": "접지저항불량", "steps": ["현장 안전조치 후 접지저항계로 접지극-주접지바 간 저항 측정.", "측정값이 100Ω 초과(법정 상한)인 경우: 접지선 체결, 부식, 단선 여부 점검.", "분전함 윗단의 전기판넬에서 접지저항을 측정하여, 접지저항 불량의 범위를 판단/기록.", "접지 계측기, 리드선 등을 점검하여 반복 측정하여 불량인 경우 GSM시공사 이관 요청.", "접지 보강: 접지봉 추가타설/혼합저항재 사용/수분공급(임시)/접지선 단면 증설.", "분전함과 충전기 섀시 간 본딩 확인(연속성 시험: 1Ω 이하).", "개선 후 재측정·기록(사진/수치) 및 시험충전."], "notes": "접지저항은 토질/계절 영향 큼. 주기적 계측기 점검을 통해 계측 신뢰도 향상 필요."}, {"id": 2, "name": "커넥터 연결 후 충전량 오르지 않음", "steps": ["차량·커넥터 결합 상태 확인(이물질/손상/잠금).", "커넥터 CP/CS(또는 PP) 전압/신호 정상 여부 측정(신호/기준 참조).", "CP 정상 & 릴레이 미동작 시: 릴레이보드 확인 및 교체.", "CP 비정상: 커넥터/케이블 손상, CP선 단선·접촉불량 → 커넥터 또는 케이블 교체.", "차량측 문제 가능: 타 차량으로 교차 시험. 앱/OCPP 세션 승인 여부 확인."], "notes": "최저 충전전류(AC 6A) 미만 설정 시 차량이 전류를 인가하지 않을 수 있음."}, {"id": 3, "name": "전원, 통신장애", "steps": ["주전원 입력 확인(상전압, 중성선 유무, 단자 체결 토크).", "내부 SMPS 출력(5V/12V 등) 확인. 저전압 시 SMPS 교체.", "네트워크 장비(이더넷/4G) 전원/신호/USIM 상태, RSSI 확인.", "충전기 리셋 테스트 및 모뎀 리셋 테스트.", "장애 지속 시 제조사 이관 요청."], "notes": "정전 후 부팅 지연/시간 동기화 실패로 오프라인처럼 보일 수 있음."}, {"id": 4, "name": "디스플레이 불량", "steps": ["백라이트 유무, 화면 잔상/깨짐 확인.", "패널 커넥터, FFC 케이블 접촉 상태 점검 및 재장착.", "패널 자체 결함 시 디스플레이 모듈 교체."], "notes": "결로/습기 유입으로 커넥터 산화 흔함. 방수패킹 상태 점검."}, {"id": 5, "name": "충전속도 저하", "steps": ["차량 SOC, 배터리 온도, 차량 최대수용전류 제한 확인(차량 앱/표시).", "현장 전압 강하/저전압 여부 측정(상-상, 상-중성선).", "케이블/커넥터 온도 상승(열화상) 및 접점 압착 불량 점검.", "GSM시공 이관 요청."], "notes": "여름 고온/겨울 한파에 따른 차량 자체 충전속도 저하 발생 가능성 있음."}, {"id": 6, "name": "충전 중단", "steps": ["충전 전 후 전압 확인(전압강하 테스트).", "ELCB(누전차단기) 트립 유무 확인.", "커넥터 CP/CS값 측정 및 커넥터 구부림에 상황에 도통테스트 진행.", "차량측 중단 원인(타 차량 교차, 차량 오류코드) 확인.", "커넥트 교체 후 충전테스트 진행하여 재현 시험."], "notes": ""}, {"id": 7, "name": "전력량계 에러", "steps": ["전력량계 표시 에러코드 확인 .", "전력량계 리셋 및 내부차단기 확인(중앙제어).", "분전함 전력량계 불량인 경우 GSM시공 이관."], "notes": ""}, {"id": 8, "name": "충전 시작 시 차단기 떨어짐", "steps": ["케이블/커넥터 단락 흔적, 수분유입 확인.", "분전함 내 누전차단기 2차측에서 절연저항 측정.", "측정값 불량인 경우, 충전기 내부 단자대 선 분리하여 절연저항 재측정.", "불량 절연 범위 기록하여 GSM시공 이관.", "누전차단기 감도 등급 적합성 확인(예: 30mA AC/Type A/Type B 필요 여부).", "원인 소자 교체 후 절연시험 → 시운전."], "notes": "분전함 내부 차단기 사진 상세히 기록 필수."}, {"id": 9, "name": "저전력 충전 안됨", "steps": ["차량 내 최소 허용전류 설정 확인(AC 최소 6A). 그 미만이면 차량이 인가하지 않음.", "차량 내 수전제한 기능으로 최소전류 미만으로 제한되는지 확인.", "GSM시공 이관."], "notes": ""}, {"id": 10, "name": "부스바 불량", "steps": ["부스바 체결 토크, 산화/열흔 확인.", "절연지지물 파손 흔적 점검.", "부스바 가까운 케이블러그 압착 상태/규격 확인.", "GSM시공 이관."], "notes": "고온 흔적이 있는 단자 주변은 반드시 연무/탄화 확인."}, {"id": 11, "name": "저전압", "steps": ["수전 측 전압 측정(무부하/부하시). 전압강하 계산 및 케이블 규격 검토.", "GSM시공 이관.", "동시부하 증가로 인한 강하 시 부하분산/스케줄링 조정.", "지속 저전압이면 한전/수전 설비 협의."], "notes": ""}, {"id": 12, "name": "내부차단기 트립", "steps": ["트립 종류 확인(과전류/누전/과온).", "케이블/모듈 절연저항 측정(메거 250V).", "내부차단기 교체 후 충전테스트."], "notes": "간헐 트립은 환경 요인(온도/습기)과 연동되는지 확인."}, {"id": 13, "name": "퓨즈 이상", "steps": ["퓨즈 규격/정격 확인. 동일 규격으로만 교체.", "퓨즈 단선 원인(단락/서지/과부하) 추적: 소자 쇼트 유무 테스트.", "EMI필터/정류부/SMPS 등 하류단 절연 확인.", "원인 제거 후 퓨즈 교체 및 시운전."], "notes": "원인 미제거 상태에서 반복 교체 금지."}, {"id": 14, "name": "회원카드 인식 불가", "steps": ["RFID 리더 전원/LED 상태 확인.", "케이블 접속(USB/RS-232/Wiegand) 및 포트 설정 확인.", "관리자 카드/여러 카드로 교차 시험.", "동기화 및 서버와의 통신 확인.", "리더 모듈 불량 시 교체."], "notes": ""}, {"id": 15, "name": "분전함 타는냄새", "steps": ["즉시 차단 후 과열 부위 탐지.", "탄화부분 상세히 기록하여 GSM시공 이관.", "차단기 단자 토크/산화/변색 확인.", "부스바/단자대 트래킹 흔적 제거 및 부품 교체.", "EMI필터/SMPS/콘덴서 팽창/누액 여부 확인."], "notes": "재통전 전 절연/토크 전수 점검 후 단계적 기동 권장."}, {"id": 16, "name": "역상에러", "steps": ["임의 두 상 교체로 순서 복구 후 표시등/에러 해제 확인.", "반복 발생 시 신규 케이블 표기·단자 라벨링 정비."], "notes": "일부 모델에서 발생"}, {"id": 17, "name": "STOP 에러", "steps": ["비상정지(Stop) 버튼 눌림/잠금 여부 확인 후 해제.", "Stop 접점/배선 단선 여부 확인.", "물리 버튼 이상 시 교체."], "notes": "."}, {"id": 18, "name": "A-1. 에바1", "type": "manual", "manual": [{"code": "COMX", "cause": "서버와 충전기 통신 에러 30초 이상 발생 시"}, {"code": "CPUnder3V", "cause": "CP선 전압이 3V 이하"}, {"code": "E10D", "cause": "온도 센서 값 Read 실패"}, {"code": "E203", "cause": "전력량 조절 실패 또는 Group member 메시지 수신 실패"}, {"code": "E20A", "cause": "전력량계(RS485) 통신 에러"}, {"code": "E302", "cause": "과열(충전기 온도 72℃ 이상)"}, {"code": "E303", "cause": "비상정지 버튼 눌림"}, {"code": "Err", "cause": "충전기 내부 통신 에러 30초 이상 발생 시"}, {"code": "STOP", "cause": "비상정지 버튼 눌림"}, {"code": "E10B", "cause": "PN532(NFC 모듈) 초기화 실패"}, {"code": "E200~E203", "cause": "블루투스 통신 에러"}, {"code": "E204~E209", "cause": "서버와 충전기 통신 에러"}, {"code": "E20B", "cause": "전력량계(RS485) 통신 에러"}, {"code": "E20C", "cause": "충전기 내부 통신 에러"}, {"code": "E20D", "cause": "충전기 내부 통신 에러"}, {"code": "E300", "cause": "대지 접지 에러"}, {"code": "E301", "cause": "Relay Stuck 상태"}, {"code": "E304", "cause": "과전류(허용치 이상 전류 흐름)"}, {"code": "E305", "cause": "CP 이상"}, {"code": "E306", "cause": "NFC 모듈 통신 이상"}], "notes": ""}, {"id": 19, "name": "A-2. 에바2", "type": "manual", "manual": [{"code": "311", "cause": "[System] Data Read 에러"}, {"code": "312", "cause": "[System] Data Write 에러"}, {"code": "321", "cause": "[System] NFC Initializing 에러"}, {"code": "331", "cause": "[System] EPD Initializing 에러"}, {"code": "332", "cause": "[System] EPD Communicating 에러 (5분 연속 통신 실패 시)"}, {"code": "341", "cause": "[System] 전력량계 Initializing 에러"}, {"code": "342", "cause": "[System] 전력량계 Communicating 에러 (5분 연속 통신 실패 시)"}, {"code": "351", "cause": "[System] SD card 에러 (카드 감지되었으나 정보 읽기 실패 등)"}, {"code": "361", "cause": "[System] UART0 Initializing 에러"}, {"code": "362", "cause": "[System] UART0 RX 에러"}, {"code": "363", "cause": "[System] UART0 TX 에러"}, {"code": "364", "cause": "[System] UART1 Initializing 에러"}, {"code": "366", "cause": "[System] UART1 TX 에러"}, {"code": "371", "cause": "[System] Mesh Communicating Initializing 에러"}, {"code": "372", "cause": "[System] Mesh Communicating 에러"}, {"code": "411", "cause": "[Safety] Over Voltage (충전시 전압 1분간 250Vac 이상 유지)"}, {"code": "422", "cause": "[Safety] Over Temperature 72℃ Relay2 (1분간 72℃ 이상 유지)"}, {"code": "423", "cause": "[Safety] Over Temperature 72℃ J1772 (1분간 72℃ 이상 유지)"}, {"code": "431", "cause": "[Safety] Relay Stuck 감지"}, {"code": "432", "cause": "[Safety] RCD 에러 (누설전류 감지 시)"}, {"code": "433", "cause": "[Safety] CP 에러 (30초간 CP 전압 -12V 유지)"}, {"code": "434", "cause": "[Safety] RCD 셀프테스트 실패"}, {"code": "435", "cause": "[Safety] 3초간 Ground 감지 실패"}, {"code": "441", "cause": "[Safety] 화재 감지"}], "notes": ""}, {"id": 20, "name": "B. 클린일렉스", "type": "manual", "manual": [{"code": "101", "cause": "AC 주전원 차단기"}, {"code": "201", "cause": "MC 오류 (AC Power Fail)"}, {"code": "202", "cause": "MC 용착 (AC Relay Fault)"}, {"code": "204", "cause": "과전류 (Over Current Error)"}, {"code": "205", "cause": "선간 절연 이상 (Leakage Current Error)"}, {"code": "402", "cause": "CP Error"}, {"code": "904", "cause": "전력량계 오류 (DC Meter Error)"}, {"code": "905", "cause": "RF Card Reader 오류"}, {"code": "909", "cause": "차량 미응답"}, {"code": "CDXX", "cause": "카드 에러(정상/미등록/잔액 없음/분실신고/이용정지/한도/동시충전제한/이용불가/운영준비중/고장충전기/운영계약종료/미등록충전기 등)"}], "notes": ""}, {"id": 21, "name": "C. 중앙제어", "type": "manual", "manual": [{"code": "Segment1", "cause": "전자접촉기/릴레이 이상"}, {"code": "Segment2", "cause": "누설전류 발생"}, {"code": "Segment3", "cause": "충전기 접지 이상"}, {"code": "Segment4", "cause": "누설전류검출부 이상"}, {"code": "Segment5", "cause": "입력 저전압"}, {"code": "Segment6", "cause": "입력 과전압"}, {"code": "Segment7", "cause": "입력전원 이상/FUSE 이상"}, {"code": "Segment8", "cause": "출력 과전류"}, {"code": "Segment9", "cause": "전자접촉기/릴레이 용착"}, {"code": "Segment10", "cause": "차량통신 이상"}, {"code": "Segment11", "cause": "내부통신 이상"}, {"code": "Segment12", "cause": "전력량계/통신 이상"}], "notes": ""}]}</script>
+  <script type="application/json" id="embedded-kb">{"name": "GSMBIZ EV Charger Troubleshooting", "version": "2.0", "updated_at": "2025-09-19T14:45:00", "locale": "ko-KR", "units": {"voltage": "V", "current": "A", "resistance": "Ω"}, "global_safety": ["분전함/충전기 작업 전: 차단기 OFF, 작업 안내표지판 설치.", "절연장갑/보안경/절연신발 착용, 비/습기 환경 시 감전 위험에 유의.", "테스트 후 접지선/중성선/상 간 혼동 금지. 재결선 전/후 항상 전압 확인.", "고장 원인 파악 전 임의 부하 투입 금지. 사진/영상으로 현장 상태 기록.", "1일 1회 이상 현장직원 대상 안전교육 실시"], "signal_reference": {"CP값 측정 기준": "DC 12V, 제조사별 허용 오차 ±1V", "CS값 측정 기준": "차량 결합/버튼 상태에 따라 저항/전압 변화 감지 확인", "절연저항 기준": "21.01.01 이전: 0.2MΩ / 이후: 1MΩ", "접지저항 기준": "법적 허용 100Ω 초과 시에도 반복 측정으로 신뢰도 확보"}, "symptoms": [{"id": 1, "name": "접지저항불량", "steps": ["현장 안전조치 후 접지저항계로 접지극-주접지바 간 저항 측정.", "측정값이 100Ω 초과(법정 상한)인 경우: 접지선 체결, 부식, 단선 여부 점검.", "분전함 윗단의 전기판넬에서 접지저항을 측정하여 범위를 판단/기록.", "계측기/리드선 이상 확인 후 반복 측정. 불량 지속 시 GSM시공 이관.", "접지 보강: 접지봉 추가/저항재/수분공급(임시)/접지선 단면 증설.", "분전함-충전기 섀시 본딩 확인(연속성 1Ω 이하).", "개선 후 재측정·기록 및 시험충전."], "notes": "토질/계절 영향 큼. 계측기 정기점검 필요."}, {"id": 2, "name": "커넥터 연결 후 충전량 오르지 않음", "steps": ["차량·커넥터 결합 상태 확인(이물질/손상/잠금).", "커넥터 CP/CS(또는 PP) 전압/신호 정상 여부 측정(신호/기준 참조).", "CP 정상 & 릴레이 미동작 시: 릴레이보드 확인/교체.", "CP 비정상: 커넥터/케이블 손상, CP선 단선·접촉불량 → 커넥터/케이블 교체.", "차량측 가능성: 타 차량 교차 시험, 앱/OCPP 승인 확인."], "notes": "AC 6A 미만 설정 시 차량이 전류 인가하지 않을 수 있음."}, {"id": 3, "name": "전원, 통신장애", "steps": ["주전원 입력(상전압/중성선/체결 토크) 확인.", "내부 SMPS 출력(5V/12V 등) 확인, 저전압 시 교체.", "네트워크(이더넷/4G) 전원/USIM/RSSI 확인.", "충전기/모뎀 리셋.", "지속 시 제조사 이관."], "notes": "정전 후 부팅 지연·시간 동기화 실패로 오프라인처럼 보일 수 있음."}, {"id": 4, "name": "디스플레이 불량", "steps": ["백라이트/잔상/깨짐 확인.", "패널/FPC 커넥터 접촉 점검·재장착.", "패널 결함 시 모듈 교체."], "notes": "결로/습기로 커넥터 산화 흔함. 방수패킹 점검."}, {"id": 5, "name": "충전속도 저하", "steps": ["차량 SOC/배터리 온도/차량 최대수용전류 제한 확인.", "현장 전압 강하/저전압 측정(상-상/상-중성선).", "케이블/커넥터 온도 상승(열화상) 및 접점 압착 불량 점검.", "GSM시공 이관 요청."], "notes": "계절 온도 영향 큼."}, {"id": 6, "name": "충전 중단", "steps": ["충전 전/후 전압 확인(전압강하).", "ELCB(누전차단기) 트립 유무 확인.", "커넥터 CP/CS값 측정 및 구부림 상태 도통 테스트.", "차량 오류코드·타 차량 교차로 차량측 원인 확인.", "커넥터 교체 후 재현 시험."], "notes": ""}, {"id": 7, "name": "전력량계 에러", "steps": ["전력량계 에러코드 확인.", "전력량계 리셋/내부차단기 확인.", "분전함 전력량계 불량 시 GSM시공 이관."], "notes": ""}, {"id": 8, "name": "충전 시작 시 차단기 떨어짐", "steps": ["케이블/커넥터 단락 흔적·수분유입 확인.", "분전함 2차측 절연저항 측정 → 불량 시 내부 단자 분리 후 재측정.", "불량 범위 기록 후 GSM시공 이관.", "차단기 감도 등급 적합성 확인(예: 30mA, Type A/B 등).", "원인 소자 교체 후 절연시험 및 시운전."], "notes": "분전함 차단기 사진 기록 필수."}, {"id": 9, "name": "저전력 충전 안됨", "steps": ["차량 최소 허용전류(AC 6A) 확인.", "수전제한 기능으로 최소전류 미만 제한 여부 확인.", "GSM시공 이관."], "notes": ""}, {"id": 10, "name": "부스바 불량", "steps": ["체결 토크, 산화/열흔 확인.", "절연지지물 파손 확인.", "인근 케이블러그 압착/규격 확인.", "GSM시공 이관."], "notes": "고온 흔적 주변 연무/탄화 확인."}, {"id": 11, "name": "저전압", "steps": ["무부하/부하시 전압 측정, 전압강하 계산·케이블 규격 검토.", "GSM시공 이관.", "동시부하 증가 시 부하분산/스케줄링.", "지속 저전압이면 한전/수전 협의."], "notes": ""}, {"id": 12, "name": "내부차단기 트립", "steps": ["트립 종류(과전류/누전/과온) 확인.", "모듈/케이블 절연저항(메거 250V) 측정.", "차단기 교체 후 테스트."], "notes": "간헐 트립은 온도/습기 등 환경요인 연관 확인."}, {"id": 13, "name": "퓨즈 이상", "steps": ["규격/정격 확인, 동일 규격으로 교체.", "단선 원인(단락/서지/과부하) 추적: 소자 쇼트 검사.", "EMI필터/정류부/SMPS 절연 확인.", "원인 제거 후 교체·시운전."], "notes": "원인 미제거 상태 반복 교체 금지."}, {"id": 14, "name": "회원카드 인식 불가", "steps": ["RFID 리더 전원/LED 확인.", "케이블 접속(USB/RS-232/Wiegand)·포트 설정 확인.", "관리자 카드 포함 교차 시험.", "동기화/서버 통신 확인.", "리더 모듈 교체."], "notes": ""}, {"id": 15, "name": "분전함 타는냄새", "steps": ["즉시 차단 후 과열부 탐지.", "탄화부 기록 → GSM시공 이관.", "차단기 단자 토크/산화/변색 확인.", "부스바/단자대 트래킹 흔적 제거·부품 교체.", "EMI필터/SMPS/콘덴서 팽창·누액 확인."], "notes": "재통전 전 절연/토크 전수 점검 후 단계 기동 권장."}, {"id": 16, "name": "역상에러", "steps": ["임의 두 상 교체로 순서 복구 후 표시등/에러 해제 확인.", "반복 시 케이블 표기·단자 라벨링 정비."], "notes": "일부 모델 발생"}, {"id": 17, "name": "STOP 에러", "steps": ["비상정지 버튼 눌림/잠금 해제 확인.", "Stop 접점/배선 단선 여부 확인.", "물리 버튼 이상 시 교체."], "notes": "."}, {"id": 18, "name": "A-1. 에바1 에러코드", "type": "manual", "manual": [{"code": "COMX", "cause": "서버-충전기 통신 에러(30초 이상)"}, {"code": "CPUnder3V", "cause": "CP 전압 3V 이하"}, {"code": "E10D", "cause": "온도 센서 Read 실패"}, {"code": "E203", "cause": "전력량 조절 실패/Group member 수신 실패"}, {"code": "E20A", "cause": "전력량계(RS485) 통신 에러"}, {"code": "E302", "cause": "과열(충전기 온도 72℃↑)"}, {"code": "E303", "cause": "비상정지 버튼 눌림"}, {"code": "Err", "cause": "내부 통신 에러(30초 이상)"}, {"code": "STOP", "cause": "비상정지 버튼 눌림"}, {"code": "E10B", "cause": "PN532(NFC) 초기화 실패"}, {"code": "E200~E203", "cause": "블루투스 통신 에러"}, {"code": "E204~E209", "cause": "서버-충전기 통신 에러"}, {"code": "E20B", "cause": "전력량계(RS485) 통신 에러"}, {"code": "E20C", "cause": "충전기 내부 통신 에러"}, {"code": "E20D", "cause": "충전기 내부 통신 에러"}, {"code": "E300", "cause": "대지 접지 에러"}, {"code": "E301", "cause": "Relay Stuck"}, {"code": "E304", "cause": "과전류"}, {"code": "E305", "cause": "CP 이상"}, {"code": "E306", "cause": "NFC 통신 이상"}], "notes": ""}, {"id": 19, "name": "A-2. 에바2 에러코드", "type": "manual", "manual": [{"code": "311", "cause": "[System] Data Read 에러"}, {"code": "312", "cause": "[System] Data Write 에러"}, {"code": "321", "cause": "[System] NFC Initializing 에러"}, {"code": "331", "cause": "[System] EPD Initializing 에러"}, {"code": "332", "cause": "[System] EPD Communicating 에러(5분 연속 실패)"}, {"code": "341", "cause": "[System] 전력량계 Initializing 에러"}, {"code": "342", "cause": "[System] 전력량계 Communicating 에러(5분 연속 실패)"}, {"code": "351", "cause": "[System] SD card 에러(감지되었으나 Read 실패 등)"}, {"code": "361", "cause": "[System] UART0 Initializing 에러"}, {"code": "362", "cause": "[System] UART0 RX 에러"}, {"code": "363", "cause": "[System] UART0 TX 에러"}, {"code": "364", "cause": "[System] UART1 Initializing 에러"}, {"code": "366", "cause": "[System] UART1 TX 에러"}, {"code": "371", "cause": "[System] Mesh Communicating Initializing 에러"}, {"code": "372", "cause": "[System] Mesh Communicating 에러"}, {"code": "411", "cause": "[Safety] Over Voltage(1분간 250Vac↑ 유지)"}, {"code": "422", "cause": "[Safety] Over Temperature 72℃ Relay2(1분간 유지)"}, {"code": "423", "cause": "[Safety] Over Temperature 72℃ J1772(1분간 유지)"}, {"code": "431", "cause": "[Safety] Relay Stuck 감지"}, {"code": "432", "cause": "[Safety] RCD 에러(누설전류 감지)"}, {"code": "433", "cause": "[Safety] CP 에러(30초간 -12V 유지)"}, {"code": "434", "cause": "[Safety] RCD 셀프테스트 실패"}, {"code": "435", "cause": "[Safety] 3초간 Ground 감지 실패"}, {"code": "441", "cause": "[Safety] 화재 감지"}], "notes": ""}, {"id": 20, "name": "B. 클린일렉스 에러코드", "type": "manual", "manual": [{"code": "101", "cause": "AC 주전원 차단기"}, {"code": "201", "cause": "MC 오류(AC Power Fail)"}, {"code": "202", "cause": "MC 융착(AC Relay Fault)"}, {"code": "204", "cause": "과전류(Over Current Error)"}, {"code": "205", "cause": "선간 절연 이상(Leakage Current Error)"}, {"code": "402", "cause": "CP Error"}, {"code": "904", "cause": "전력량계 오류(DC Meter Error)"}, {"code": "905", "cause": "RF Card Reader 오류"}, {"code": "909", "cause": "차량 미응답"}, {"code": "CDXX", "cause": "카드 에러(정상/미등록/잔액 없음/분실신고/이용정지/한도/동시충전제한/이용불가/운영준비중/고장충전기/운영계약종료/미등록충전기 등)"}], "notes": ""}, {"id": 21, "name": "C. 중앙제어 에러코드", "type": "manual", "manual": [{"code": "Segment1", "cause": "전자접촉기/릴레이 이상"}, {"code": "Segment2", "cause": "누설전류 발생"}, {"code": "Segment3", "cause": "충전기 접지 이상"}, {"code": "Segment4", "cause": "누설전류검출부 이상"}, {"code": "Segment5", "cause": "입력 저전압"}, {"code": "Segment6", "cause": "입력 과전압"}, {"code": "Segment7", "cause": "입력전원 이상/FUSE 이상"}, {"code": "Segment8", "cause": "출력 과전류"}, {"code": "Segment9", "cause": "전자접촉기/릴레이 융착"}, {"code": "Segment10", "cause": "차량통신 이상"}, {"code": "Segment11", "cause": "내부통신 이상"}, {"code": "Segment12", "cause": "전력량계/통신 이상"}], "notes": ""}, {"id": 22, "name": "⚠️ 긴급출동 CASE A. 커넥터 래버는 눌리지만, 커넥터가 쉽게 빠지지 않는 경우", "steps": ["차량 문을 열었다 닫아 충전 락 해제 신호 재전송", "커넥터 버튼을 끝까지 누른 상태에서 직선 방향으로 천천히 당김", "좌우·상하로 가볍게 흔들며 분리 시도", "분리 후 커넥터 단자·인렛 상태 확인 및 사진 기록"], "notes": "", "noIndex": true, "category": "emergency", "customSafety": ["⚠️ 공통 안전 수칙", "1. 개인 보호구 착용", "   - 절연장갑, 절연화, 보호안경 반드시 착용", "   - 우천·눈길 등 습기 있는 환경에서는 절연 매트 사용", "2. 전원 차단 절차", "   - 현장 도착 즉시 충전기 차단기 OFF", "   - 차량 전원 OFF 및 주차(P) 상태 확인", "3. 기본 점검", "   - 충전기 화면의 상태 메시지/오류 코드 확인", "   - 차량 계기판 충전 상태 표시등 확인", "   - 현장 상황(커넥터 잠금 여부, 배선 꼬임 여부 등) 확인"]}, {"id": 23, "name": "⚠️ 긴급출동 CASE B. 커넥터 락이 완전히 잠겨 버튼이 전혀 눌리지 않는 경우", "steps": ["분전함 내 충전기 전원 OFF → ON(완전 부팅 완료 까지) 3회 이상 반복", "차량 시동 ON → OFF 순서로 작동 (일부 차종 자동 해제)", "차량 내부 충전 포트 해제 버튼(운전석 좌측 하단·내비 메뉴·트렁크내 좌우 등) 실행", "해제가 안 될 경우 충전기 차단기 OFF 후 3분 이상 대기 → 재시도"], "notes": "", "noIndex": true, "category": "emergency", "customSafety": ["⚠️ 공통 안전 수칙", "1. 개인 보호구 착용", "   - 절연장갑, 절연화, 보호안경 반드시 착용", "   - 우천·눈길 등 습기 있는 환경에서는 절연 매트 사용", "2. 전원 차단 절차", "   - 현장 도착 즉시 충전기 차단기 OFF", "   - 차량 전원 OFF 및 주차(P) 상태 확인", "3. 기본 점검", "   - 충전기 화면의 상태 메시지/오류 코드 확인", "   - 차량 계기판 충전 상태 표시등 확인", "   - 현장 상황(커넥터 잠금 여부, 배선 꼬임 여부 등) 확인"]}, {"id": 24, "name": "⚠️ 긴급출동 CASE C. 커넥터 핀이 인렛에 걸려 물리적으로 고착된 경우", "steps": ["충전기 차단기 OFF 상태 반드시 확인", "커넥터 버튼을 누른 상태에서 상·하·좌·우로 천천히 흔들며 직선으로 당김", "필요 시 드라이버로 커넥터의 나사 수동 해제 (인렛 플라스틱 파손 주의)", "분리 후 커넥터 핀·인렛 상태 사진 기록 (변색, 녹, 마모 여부 확인)"], "notes": "", "noIndex": true, "category": "emergency", "customSafety": ["⚠️ 공통 안전 수칙", "1. 개인 보호구 착용", "   - 절연장갑, 절연화, 보호안경 반드시 착용", "   - 우천·눈길 등 습기 있는 환경에서는 절연 매트 사용", "2. 전원 차단 절차", "   - 현장 도착 즉시 충전기 차단기 OFF", "   - 차량 전원 OFF 및 주차(P) 상태 확인", "3. 기본 점검", "   - 충전기 화면의 상태 메시지/오류 코드 확인", "   - 차량 계기판 충전 상태 표시등 확인", "   - 현장 상황(커넥터 잠금 여부, 배선 꼬임 여부 등) 확인"]}, {"id": 25, "name": "⚠️ 긴급출동 CASE D. 커넥터 단자가 탄화/융착되어 완전히 붙은 경우", "steps": ["즉시 전원 차단 + 차량 전원 OFF 확인", "강제 분리 금지 (인렛 손상 및 안전사고 우려)", "커넥터의 나사를 수동 해제하여, 커넥터 분해 시도", "LG 충전기의 경우 같은 크기 별모양 렌치 2개 필요 (L형 별모양 렌치 필요할 수 있음)", "고객에게 차량 제조사 A/S 필요 설명 및 안내"], "notes": "", "noIndex": true, "category": "emergency", "customSafety": ["⚠️ 공통 안전 수칙", "1. 개인 보호구 착용", "   - 절연장갑, 절연화, 보호안경 반드시 착용", "   - 우천·눈길 등 습기 있는 환경에서는 절연 매트 사용", "2. 전원 차단 절차", "   - 현장 도착 즉시 충전기 차단기 OFF", "   - 차량 전원 OFF 및 주차(P) 상태 확인", "3. 기본 점검", "   - 충전기 화면의 상태 메시지/오류 코드 확인", "   - 차량 계기판 충전 상태 표시등 확인", "   - 현장 상황(커넥터 잠금 여부, 배선 꼬임 여부 등) 확인"]}]}</script>
 
   <script>
     let KB = null;
@@ -107,16 +110,48 @@
       document.getElementById('kbStatus').textContent = '상태: 로드 완료';
     }
 
+    // Order: Symptoms(1~17) → Manuals(A-1, A-2, B, C) → Emergency(A~D)
+    function rankItem(s){
+      if (s.category==='emergency') return 3;
+      if (s.type==='manual') return 2;
+      return 1;
+    }
+    function manualOrderKey(name){
+      if (name.startsWith('A-1.')) return 1;
+      if (name.startsWith('A-2.')) return 2;
+      if (name.startsWith('B. '))  return 3;
+      if (name.startsWith('C. '))  return 4;
+      return 99;
+    }
+
     function populateSelect(query){
       const list = (KB?.symptoms)||[];
-      const filtered = query ? list.filter(s => (s.name + ' ' + (s.notes||'')).includes(query)) : list;
-      filtered.sort((a,b)=> a.id-b.id);
+      let filtered = query ? list.filter(s => (s.name + ' ' + (s.notes||'')).includes(query)) : list;
+
+      filtered.sort((a,b)=>{
+        const ra = rankItem(a), rb = rankItem(b);
+        if (ra !== rb) return ra - rb;
+        if (ra===2){ // manuals
+          const ka = manualOrderKey(a.name), kb = manualOrderKey(b.name);
+          if (ka!==kb) return ka-kb;
+          return a.name.localeCompare(b.name,'ko-KR');
+        }
+        if (ra===1){ // symptoms numeric
+          const ia = parseInt(a.id,10), ib = parseInt(b.id,10);
+          return (ia||0)-(ib||0);
+        }
+        // emergency
+        return a.name.localeCompare(b.name,'ko-KR');
+      });
+
       symptomSelect.innerHTML = '';
       filtered.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.id;
-        const label = s.type==='manual' ? `${s.name}` : `${s.id}. ${s.name}`;
+        const label = (s.type==='manual' || s.noIndex) ? `${s.name}` : `${s.id}. ${s.name}`;
         opt.textContent = label;
+        if (s.category==='emergency') opt.setAttribute('data-emergency','1');
+        if (s.type==='manual') opt.setAttribute('data-manual','1');
         symptomSelect.appendChild(opt);
       });
       if (filtered.length){
@@ -131,15 +166,23 @@
       const s = (KB?.symptoms||[]).find(x => String(x.id) === String(id));
       if (!s){ output.innerHTML = '<div class="text-gray-500">항목을 찾을 수 없습니다.</div>'; return; }
 
+      const hasCustom = Array.isArray(s.customSafety) && s.customSafety.length > 0;
+      const safetyTitle = hasCustom ? s.customSafety[0] : '현장/안전';
+      const safetyList  = hasCustom ? s.customSafety.slice(1) : (KB.global_safety||[]);
+
+      // Manuals (error code tables)
       if (s.type === 'manual' && Array.isArray(s.manual)){
         const rows = s.manual.map(it => `<tr><td class="py-1 px-2 font-mono text-sm">${it.code}</td><td class="py-1 px-2 text-sm">${it.cause}</td></tr>`).join('');
         output.innerHTML = `
           <article class="bg-white rounded-3xl shadow p-6 md:p-8 border border-gray-100">
-            <h2 class="text-xl md:text-2xl font-extrabold mb-4" style="color:var(--gs-blue)">${s.name} · 에러코드 요약</h2>
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl md:text-2xl font-extrabold" style="color:var(--gs-blue)">${s.name}</h2>
+              <span class="text-xs px-2 py-1 pill" style="background:#DBEAFE; color:#1E40AF; border:1px solid #BFDBFE">오류코드</span>
+            </div>
             <div class="overflow-x-auto">
               <table class="min-w-full border border-gray-200 rounded-lg">
-                <thead class="bg-gray-50 text-xs uppercase text-gray-600">
-                  <tr><th class="px-2 py-2 text-left w-28">코드</th><th class="px-2 py-2 text-left">원인</th></tr>
+                <thead class="bg-sky-100 text-xs uppercase" style="color:#0369A1">
+                  <tr><th class="px-2 py-2 text-left w-32">코드</th><th class="px-2 py-2 text-left">원인</th></tr>
                 </thead>
                 <tbody>${rows}</tbody>
               </table>
@@ -148,23 +191,34 @@
         return;
       }
 
-      const safety = (KB.global_safety||[]).map(t=>`<li class="mb-1">${t}</li>`).join('');
       const steps = (s.steps||[]).map((t,i)=>`
         <li class="flex gap-3 items-start">
           <input type="checkbox" class="mt-1 h-5 w-5 rounded border-gray-300" />
           <div class="flex-1">${i+1}. ${t}</div>
         </li>`).join('');
+
       const signals = KB.signal_reference ? Object.entries(KB.signal_reference).map(([k,v])=>`
         <div class="p-3 rounded-2xl" style="background:#F9FAFB; border:1px solid #E5E7EB">
           <div class="text-xs font-semibold" style="color:#6B7280">${k}</div>
           <div class="text-sm">${v}</div>
         </div>`).join('') : '';
 
+      // Safety block: for customSafety, render as plain paragraphs (no bullets) with line breaks
+      const safetyBlock = hasCustom 
+        ? `<div class="p-4 rounded-2xl" style="background:#FFFBEB; border:1px solid #FDE68A">
+             <div class="font-semibold mb-2" style="color:#92400E">${safetyTitle}</div>
+             <div class="text-sm whitespace-pre-wrap leading-6">${safetyList.join('\\n')}</div>
+           </div>`
+        : `<div class="p-4 rounded-2xl" style="background:#FFFBEB; border:1px solid #FDE68A">
+             <div class="font-semibold mb-2" style="color:#92400E">현장/안전</div>
+             <ul class="list-disc list-inside text-sm space-y-1">${(KB.global_safety||[]).map(t=>`<li class="mb-1">${t}</li>`).join('')}</ul>
+           </div>`;
+
       output.innerHTML = `
         <article class="bg-white rounded-3xl shadow p-6 md:p-8 border border-gray-100">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl md:text-2xl font-extrabold" style="color:var(--gs-blue)">${s.id}. ${s.name}</h2>
-            <span class="text-xs px-2 py-1 pill" style="background:#ECFDF5; color:#065F46; border:1px solid #A7F3D0">체크 후 인쇄/저장</span>
+            <h2 class="text-xl md:text-2xl font-extrabold" style="color:var(--gs-blue)">${s.noIndex ? s.name : (s.id + ". " + s.name)}</h2>
+            ${s.category==="emergency" ? `<span class="text-xs px-2 py-1 pill" style="background:#FEF3C7; color:#92400E; border:1px solid #FCD34D">긴급출동</span>` : `<span class="text-xs px-2 py-1 pill" style="background:#ECFDF5; color:#065F46; border:1px solid #A7F3D0">체크 후 인쇄/저장</span>`}
           </div>
           <div class="grid md:grid-cols-3 gap-5 mb-6">
             <div class="md:col-span-2">
@@ -172,10 +226,7 @@
               <ol class="space-y-2">${steps}</ol>
             </div>
             <aside class="space-y-3">
-              <div class="p-4 rounded-2xl" style="background:#FFFBEB; border:1px solid #FDE68A">
-                <div class="font-semibold mb-2" style="color:#92400E">현장/안전</div>
-                <ul class="list-disc list-inside text-sm space-y-1">${safety}</ul>
-              </div>
+              ${safetyBlock}
               ${s.notes ? `<div class="p-4 rounded-2xl" style="background:#EFF6FF; border:1px solid #BFDBFE"><div class="font-semibold mb-1" style="color:#1E40AF">비고</div><div class="text-sm leading-relaxed">${s.notes}</div></div>` : ''}
             </aside>
           </div>
